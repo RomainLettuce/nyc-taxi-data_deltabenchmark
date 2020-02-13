@@ -223,6 +223,15 @@ Also, set up your spark Master and executor cores or instances.
 ## 4. Measuring
 
 **1. Load files to hadoop dfs**
+Turn on your hadoop, yarn, spark, zeppelin.
+
+	start-dfs.sh
+	start-yarn.sh
+	start-all.sh
+	zeppelin-daemon.sh start
+
+**(You should set up all the path correctly.)
+
 Create your data storage in your hadoop dfs.
 
 	hadoop fs -mkdir nyc-taxi-data
@@ -236,6 +245,59 @@ Now, you can load dataframe with your data files on zeppelin from your server's 
 **2. Load dataframe on zeppelin notebook**
 Make new spark project on zeppelin and write following paragraph to load dataframe and set column names and column types. The paragraph finally convert the df to delta table.
 
+	%spark.pyspark
+	from pyspark.sql.functions import *
+	from pyspark.sql.types import *
+	df = spark.read.csv(“nyc-taxi-data/*.csv”)
+	df = df.withColumn(“id”, col(“_c0”).cast(IntegerType())).drop(“_c0")
+	df = df.withColumnRenamed(“_c1”, “vendor_id”)
+	df = df.withColumn(“pickup_datetime”, col(“_c2").cast(TimestampType())).drop(“_c2”)
+	df = df.withColumn(“dropoff_datetime”, col(“_c3”).cast(TimestampType())).drop(“_c3")
+	df = df.withColumnRenamed(“_c4”, “store_and_fwd_flag”)
+	df = df.withColumn(“rate_code_id”, col(“_c5").cast(IntegerType())).drop(“_c5”)
+	df = df.withColumn(“pickup_longitude”, col(“_c6”).cast(DoubleType())).drop(“_c6")
+	df = df.withColumn(“pickup_latitude”, col(“_c7").cast(DoubleType())).drop(“_c7”)
+	df = df.withColumn(“dropoff_longitude”, col(“_c8”).cast(DoubleType())).drop(“_c8")
+	df = df.withColumn(“dropoff_latitude”, col(“_c9").cast(DoubleType())).drop(“_c9”)
+	df = df.withColumn(“passenger_count”, col(“_c10”).cast(IntegerType())).drop(“_c10")
+	df = df.withColumn(“trip_distance”, col(“_c11").cast(DoubleType())).drop(“_c11”)
+	df = df.withColumn(“fare_amount”, col(“_c12”).cast(DoubleType())).drop(“_c12")
+	df = df.withColumn(“extra”, col(“_c13").cast(DoubleType())).drop(“_c13”)
+	df = df.withColumn(“mta_tax”, col(“_c14”).cast(DoubleType())).drop(“_c14")
+	df = df.withColumn(“tip_amount”, col(“_c15").cast(DoubleType())).drop(“_c15”)
+	df = df.withColumn(“tolls_amount”, col(“_c16”).cast(DoubleType())).drop(“_c16")
+	df = df.withColumn(“improvement_surcharge”, col(“_c17").cast(DoubleType())).drop(“_c17”)
+	df = df.withColumn(“total_amount”, col(“_c18”).cast(DoubleType())).drop(“_c18")
+	df = df.withColumnRenamed(“_c19”, “payment_type”)
+	df = df.withColumn(“trip_type”, col(“_c20").cast(IntegerType())).drop(“_c20”)
+	df = df.withColumnRenamed(“_c21", “cab_type”)
+	df = df.withColumn(“rain”, col(“_c22”).cast(IntegerType())).drop(“_c22")
+	df = df.withColumn(“snow_depth”, col(“_c23").cast(IntegerType())).drop(“_c23”)
+	df = df.withColumn(“snowfall”, col(“_c24”).cast(IntegerType())).drop(“_c24")
+	df = df.withColumn(“max_temp”, col(“_c25").cast(IntegerType())).drop(“_c25”)
+	df = df.withColumn(“min_temp”, col(“_c26”).cast(IntegerType())).drop(“_c26")
+	df = df.withColumn(“wind”, col(“_c27").cast(IntegerType())).drop(“_c27”)
+	df = df.withColumn(“pickup_nyct2010_gid”, col(“_c28”).cast(IntegerType())).drop(“_c28")
+	df = df.withColumnRenamed(“_c29”, “pickup_ctlabel”)
+	df = df.withColumn(“pickup_borocode”, col(“_c30").cast(IntegerType())).drop(“_c30”)
+	df = df.withColumnRenamed(“_c31", “pickup_boroname”)
+	df = df.withColumnRenamed(“_c32", “pickup_t2010”)
+	df = df.withColumnRenamed(“_c33", “pickup_boroct2010”)
+	df = df.withColumnRenamed(“_c34", “pickup_cdeligibil”)
+	df = df.withColumnRenamed(“_c35", “pickup_ntacode”)
+	df = df.withColumnRenamed(“_c36", “pickup_ntaname”)
+	df = df.withColumnRenamed(“_c37", “pickup_puma”)
+	df = df.withColumn(“dropoff_nyct2010_gid”, col(“_c38”).cast(IntegerType())).drop(“_c38")
+	df = df.withColumnRenamed(“_c39”, “dropoff_ctlabel”)
+	df = df.withColumn(“dropoff_borocode”, col(“_c40").cast(IntegerType())).drop(“_c40”)
+	df = df.withColumnRenamed(“_c41", “dropoff_boroname”)
+	df = df.withColumnRenamed(“_c42", “dropoff_t2010”)
+	df = df.withColumnRenamed(“_c43", “dropoff_boroct2010”)
+	df = df.withColumnRenamed(“_c44", “dropoff_cdeligibil”)
+	df = df.withColumnRenamed(“_c45", “dropoff_ntacode”)
+	df = df.withColumnRenamed(“_c46", “dropoff_ntaname”)
+	df = df.withColumnRenamed(“_c47", “dropoff_puma”)
+	df.write.format(“delta”).mode(“append”).save(“nyc-taxi-data/trips”)
 
 Then, make a new paragraph and create a table using delta from your delta table which was made in previous step.
 
