@@ -42,7 +42,7 @@ zeppelin: **0.8.2**
 
 **download_raw_data.sh** automatically downloads every trips by wget all urls from **setup_files/raw_data_urls.txt**
 
-However, in my case, the local pc had only about 50GB space available so, I commented out all urls except 2~4 target urls to download small portion of raw dataset.
+However, in my case, the local pc had only about 50GB space available so, I commented out all urls except 2~4 target urls to download small portion of raw dataset. You can also make new txt file that contains only files that you want to download. Feel free to modify methods.
 
 After comment out all urls except your target urls, execute
 
@@ -56,7 +56,7 @@ Yellow taxi trip data files of **2010-02 & 2010-03** contains **bad row** which 
 
 **2. initialize db**
 
-**initialize_database.sh** automatically creates db on postgresql and makes some tables by using exist datasets **data/central_park_weather.csv**, **data/fhv_bases.csv**
+**initialize_database.sh** automatically creates db on postgresql and makes some tables by using exist datasets **data/central_park_weather.csv**, **data/fhv_bases.csv** and directory **shapefiles**
 
 In my case, original **initialize_database.sh** made some errors because it uses some functions from postgis to handle nested attributes but, original sh file did not import postgis.
 
