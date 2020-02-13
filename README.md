@@ -240,8 +240,58 @@ Make new spark project on zeppelin and write following paragraph to load datafra
 Then, make a new paragraph and create a table using delta from your delta table which was made in previous step.
 
 
+	%spark.sql
+
+	CREATE TABLE trips
+		USING DELTA
+		LOCATION 'nyc-taxi-data/trips'
+
 **3. Try queries**
 Now you can use this table to query. For example, I made following 4 queries which are used in the blog that I refered.
+
+**Query1**
+
+	%spark.sql
+	
+	SELECT cab_type,
+		count(*)
+	FROM trips
+	GROUP BY cab_type
+
+**Query2**
+
+	%spark.sql
+	
+	SELECT passenger_count,
+		avg(total_amount)
+	FROM trips
+	GROUP BY passenger_count
+
+**Query3**
+
+	%spark.sql
+	
+	SELECT passenger_count,
+		year(pickup_datetime),
+		count(*)
+	FROM trips
+	GROUP BY passenger_count,
+		year(pickup_datetime)
+
+**Query4**
+
+	%spark.sql
+	
+	SELECT passenger_count,
+		year(pickup_datetime) trip_year,
+		round(trip_distance),
+		count(*) trips
+	FROM trips
+	GROUP BY passenger_count,
+		year(pickup_datetime),
+		round(trip_distance)
+	ORDER BY trip_year,
+		trips desc
 
 Each query is written in a separated paragraph and you can see the result of query with various format by using zeppelin's tools.
 
