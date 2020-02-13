@@ -216,6 +216,16 @@ Add your delta core jar file's path to jars.
 
 Also, set up your spark Master and executor cores or instances.
 
-![Alt text](/Users/mf839-033/Downloads/KakaoTalk_Photo_2020-02-13-11-21-10.png)
+![Alt text](image1.png)
 
+## 4. Measuring
 
+Create your data storage in your hadoop dfs.
+
+	hadoop fs -mkdir nyc-taxi-data
+
+Unzip your csv.gz files and put the csv results to your hadoop distributed file system.
+
+	hadoop fs -put /your/file/path.csv.gz nyc-taxi-data
+
+Now, you can load dataframe with your data files on zeppelin 
