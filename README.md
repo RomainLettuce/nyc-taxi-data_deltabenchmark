@@ -92,7 +92,7 @@ then,
 	AND relkind = 'r'
 	ORDER BY reltuples DESC;
 
-
+![Alt text](image3.png)
 
 **4. Preprocessing imported data**
 
