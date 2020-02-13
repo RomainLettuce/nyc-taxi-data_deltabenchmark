@@ -36,7 +36,7 @@ delta-core: **delta-core_2.12-0.4.0.jar**
 
 zeppelin: **0.8.2**
 
-## Preprocessing
+## 1. Preprocessing
 
 **1. Download raw data**
 
@@ -171,5 +171,51 @@ If you connect to the db, you can preprocess and export the imported data with f
 You can change path of the exported file on second from last line.
 
 **ps) I refer to the blog that I linked to write above command. The original command of the blog did not match with some column name of weather csv file. Therefore, I accordingly changed some column name to finish merging tables successfully.**
+
+**5. Truncate table**
+
+If you are planning repeat above process for many partitions, you should truncate trips table after export the trip datas.
+
+If you don't, trips data will be able to have duplicates and it can also cause lack of memory later.
+
+Therefore, use following command to truncate used tables and prevent above problems.
+
+	TRUNCATE TABLE trips;
+
+**6. Send csv to server**
+
+Finally, send processed csv file to the server that save datas in hadoop dfs.
+
+Use scp command to csv file. Following is example.
+
+	scp /Your/processed/csv_file/path server_username@server_ip:/Target/file/path
+
+## 2. Hadoop & Spark Environment
+
+Hadoop and Spark environment set up is up to you.
+
+Be sure to use the most recently updated version of pyspark by using following command. It is essential to use delta core in next step.
+
+	pip install --upgrade pyspark
+
+In my case, my server couldn't use internet so, I first download spark at the local mac pc and used pip upgrade command to update pyspark.
+
+Then, I sent whole spark directory to Linux server.
+
+It has no problem because spark for Unix shows same behaviors on both mac and Linux.
+
+If you can use internet in your server, just use the most simplest way to set up hadoop and spark.
+
+## 3. Zeppelin set up
+
+First, download zeppelin and set up essential configurations such as zeppelin server url port or spark home etc)
+
+Then, connect to zeppelin server port url and log in with your account. Now you can change your zeppelin spark interpreter.
+
+Add your delta core jar file's path to jars.
+
+Also, set up your spark Master and executor cores or instances.
+
+![Alt text](/Users/mf839-033/Downloads/KakaoTalk_Photo_2020-02-13-11-21-10.png)
 
 
