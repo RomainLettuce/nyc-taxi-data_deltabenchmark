@@ -220,6 +220,7 @@ Also, set up your spark Master and executor cores or instances.
 
 ## 4. Measuring
 
+**1. Load files to hadoop dfs**
 Create your data storage in your hadoop dfs.
 
 	hadoop fs -mkdir nyc-taxi-data
@@ -228,4 +229,33 @@ Unzip your csv.gz files and put the csv results to your hadoop distributed file 
 
 	hadoop fs -put /your/file/path.csv.gz nyc-taxi-data
 
-Now, you can load dataframe with your data files on zeppelin 
+Now, you can load dataframe with your data files on zeppelin from your server's hadoop dfs.
+
+**2. Load dataframe on zeppelin notebook**
+Make new spark project on zeppelin and write following paragraph to load dataframe and set column names and column types. The paragraph finally convert the df to delta table.
+
+
+Then, make a new paragraph and create a table using delta from your delta table which was made in previous step.
+
+
+**3. Try queries**
+Now you can use this table to query. For example, I made following 4 queries which are used in blog that I refered.
+
+Each query is written in a separated paragraph and you can see the result of query with various format by using zeppelin's tools.
+
+
+**4. Measure execution time**
+You can check each query's sub tasks and execution time to finish each tasks in spark jobs url. (In my case http://my_ip:4044)
+
+Following picture shows interface of spark jobs web site. You can easily add all tasks' execution time and the result is the taken time to query.
+
+For example, my example query 1 had **6 tasks** and total taken time was **0.039 + 0.082 + 0.035 + 0.023 + 3 + 0.2 = 3.379 (sec)**
+
+## 5. Comment
+Almost of preprocessing processes refer to commented git hub repo and blog post. Thanks to both guys. Those sources also give you many insights or help.
+
+If you have some trouble during set up hadoop/spark/zeppelin, contact me with an E-mail or issue tab. I will give you help as much as I can.
+
+## 6. Contact
+
+Send E-mail to wsm723@kaist.ac.kr or contact with issue tab
