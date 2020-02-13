@@ -100,7 +100,7 @@ You can do this work after connect to the db **nyc-taxi-data**
 
 	psql nyc-taxi-data
 
-If you connect to the db, you can preprocess and export the imported data with following command. You can also see this command line in **format.rtf**
+If you connect to the db, you can preprocess and export the imported data with following command. You can also see this command line in **format.txt**
 
 	COPY (
 		SELECT trips.cab_type_id,
