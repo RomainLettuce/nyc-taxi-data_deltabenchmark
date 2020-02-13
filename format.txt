@@ -61,5 +61,5 @@ COPY (
 		LEFT JOIN nyct2010 drop_off
 				ON drop_off.gid = trips.dropoff_nyct2010_gid
 ) TO PROGRAM
-	'gzip > /Users/mf839-033/nyc-taxi-data/trips/your_filename.csv.gz'
+	'gzip > /Users/mf839-033/nyc-taxi-data_deltabenchmark/trips/your_filename.csv.gz'
 	WITH CSV;
