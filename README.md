@@ -92,7 +92,6 @@ then,
 	AND relkind = 'r'
 	ORDER BY reltuples DESC;
 
-![Alt text](image3.png)
 <img src="image3.png" width="40%" height="40%" title="" alt=""></img>
 
 **4. Preprocessing imported data**
