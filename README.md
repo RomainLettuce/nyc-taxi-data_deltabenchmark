@@ -92,6 +92,8 @@ then,
 	AND relkind = 'r'
 	ORDER BY reltuples DESC;
 
+![Alt text](image3.png)
+
 **4. Preprocessing imported data**
 
 After import trip datas into postgresql, you should merge this table with some previouly exist tables and set or change some column name.
@@ -165,7 +167,7 @@ If you connect to the db, you can preprocess and export the imported data with f
 			LEFT JOIN nyct2010 drop_off
 					ON drop_off.gid = trips.dropoff_nyct2010_gid
 	) TO PROGRAM
-		'gzip > /Users/mf839-033/nyc-taxi-data/trips/your_filename.csv.gz'
+		'gzip > /Users/mf839-033/nyc-taxi-data_deltabenchmark/trips/your_filename.csv.gz'
 		WITH CSV;
 
 You can change path of the exported file on second from last line.
