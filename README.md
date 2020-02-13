@@ -239,7 +239,7 @@ Then, make a new paragraph and create a table using delta from your delta table 
 
 
 **3. Try queries**
-Now you can use this table to query. For example, I made following 4 queries which are used in blog that I refered.
+Now you can use this table to query. For example, I made following 4 queries which are used in the blog that I refered.
 
 Each query is written in a separated paragraph and you can see the result of query with various format by using zeppelin's tools.
 
@@ -248,6 +248,8 @@ Each query is written in a separated paragraph and you can see the result of que
 You can check each query's sub tasks and execution time to finish each tasks in spark jobs url. (In my case http://my_ip:4044)
 
 Following picture shows interface of spark jobs web site. You can easily add all tasks' execution time and the result is the taken time to query.
+
+![Alt text](image2.png)
 
 For example, my example query 1 had **6 tasks** and total taken time was **0.039 + 0.082 + 0.035 + 0.023 + 3 + 0.2 = 3.379 (sec)**
 
